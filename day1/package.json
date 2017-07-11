@@ -1,0 +1,20 @@
+{
+  "name": "YABE",
+  "version": "0.0.1",
+  "description": "Yet Another Blog Engine",
+  "main": "index.js",
+  "scripts": {
+    "serve": "nodemon --verbose",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "Unlicense",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}
