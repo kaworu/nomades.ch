@@ -27,8 +27,20 @@ app.use(bodyParser.json());
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: false}))
 
+/* callback(err, index, post) */
+function find_post_with_index_by_id(_id, callback) {
+    const i = app.locals.posts.findIndex(post => post._id == _id);
+    if (i == -1) {
+        const err = new Error("no post with _id=" + _id);
+        return callback(err);
+    } else {
+        const post = app.locals.posts[i];
+        return callback(/* no error */null, i, post);
+    }
+}
+
 // create a post
-app.post("/api/posts", (req, res) => {
+app.post("/api/posts", function (req, res) {
     const post_to_create = req.body;
     /* add the given post_to_create to our posts array */
     app.locals.posts.push(post_to_create);
@@ -46,34 +58,36 @@ app.get("/api/posts", (req, res) => {
 app.get("/api/posts/:id", (req, res) => {
     const req_id = req.params.id;
     /* find the requested post in our post array */
-    const post_to_read = app.locals.posts.find(post => post._id == req_id);
-    if (!post_to_read) {
-        /* no post is matching the requested id, return a 404 Not Found HTTP
-           status */
-        res.status(404 /* Not Found */).send();
-    } else {
-        /* we found the requested post, send it. If we don't set the HTTP
-           status explicitely, the default value is 200 OK. */
-        res.send(post_to_read);
-    }
+    find_post_with_index_by_id(req_id, function (err, index, post_to_read) {
+        if (err) {
+            /* no post is matching the requested id, return a 404 Not Found HTTP
+               status */
+            res.status(404 /* Not Found */).send();
+        } else {
+            /* we found the requested post, send it. If we don't set the HTTP
+               status explicitely, the default value is 200 OK. */
+            res.send(post_to_read);
+        }
+    });
 });
 
 // update
 app.put("/api/posts/:id", (req, res) => {
     const req_id = req.params.id;
     const updated_post = req.body;
-    const index = app.locals.posts.findIndex(post => post._id == req_id);
-    if (index === -1) {
-        res.status(404 /* Not Found */).send();
-    } else if (updated_post._id != req_id) {
-        /* here the client sent a suspicious request, providing an id on the
-           path that doesn't match the id from the request body. */
-        res.status(400 /* Bad Request */).send();
-    } else {
-        /* replace the "old post" by updated_post and send the updated version */
-        app.locals.posts[index] = updated_post;
-        res.send(updated_post);
-    }
+    find_post_with_index_by_id(req_id, function (err, index, post_to_read) {
+        if (err) {
+            res.status(404 /* Not Found */).send();
+        } else if (updated_post._id != req_id) {
+            /* here the client sent a suspicious request, providing an id on the
+               path that doesn't match the id from the request body. */
+            res.status(400 /* Bad Request */).send();
+        } else {
+            /* replace the "old post" by updated_post and send the updated version */
+            app.locals.posts[index] = updated_post;
+            res.send(updated_post);
+        }
+    });
 });
 
 // partial update
