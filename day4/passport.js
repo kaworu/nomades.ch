@@ -9,7 +9,8 @@ app.use(passport.initialize());
 passport.use(new BasicStrategy({
     realm: "Users",
 }, function(username, password, done) {
-        const Users = [ // a fake database.
+        // a fake database.
+        const Users = [
             {name: "alice", password: "secret"},
             {name: "bob",   password: "birthday"},
         ];
@@ -22,6 +23,17 @@ passport.use(new BasicStrategy({
         else
             return done(/* no error */null, /* the authenticated user */user);
     }
+/* Mongoose example: */
+// User.findOne({name: username}).catch(done).then(user => {
+//     if (user)
+//         return done(/* no error*/null, /* authentication failed */false);
+//     bcrypt.compare(password, user.hash).then(success => {
+//         if (success)
+//            return done(/* no error */null, /* the authenticated user */user);
+//         else
+//            return done(/* no error*/null, /* authentication failed */false);
+//     });
+// });
 ));
 
 /* authorization: custom Middleware factory */
