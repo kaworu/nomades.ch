@@ -169,13 +169,13 @@ describe("blogging", () => {
         });
         context("when the post id doesn't match", () => {
             it("should return 400 Bad Request", (done) => {
-                request(app).put(`/api/posts/${partial._id + 1}`).send(partial).end((err, res) => {
+                request(app).patch(`/api/posts/${partial._id + 1}`).send(partial).end((err, res) => {
                     expect(res.status).to.eql(400);
                     return done();
                 });
             });
             it("should return an empty body", (done) => {
-                request(app).put(`/api/posts/${partial._id + 1}`).send(partial).end((err, res) => {
+                request(app).patch(`/api/posts/${partial._id + 1}`).send(partial).end((err, res) => {
                     expect(res.body).to.be.empty;
                     return done();
                 });
@@ -189,7 +189,7 @@ describe("blogging", () => {
                 });
             });
             it("should return the post from the database", (done) => {
-                request(app).put(`/api/posts/${partial._id}`).send(partial).end((err, res) => {
+                request(app).patch(`/api/posts/${partial._id}`).send(partial).end((err, res) => {
                     const expected = app.locals.posts.find(p => p._id == partial._id);
                     expect(res.body).to.eql(expected);
                     return done();
@@ -207,7 +207,7 @@ describe("blogging", () => {
                 });
             });
             it("should return an empty body", (done) => {
-                request(app).put(`/api/posts/${invalid_post_id}`).end((err, res) => {
+                request(app).delete(`/api/posts/${invalid_post_id}`).end((err, res) => {
                     expect(res.body).to.be.empty;
                     return done();
                 });
