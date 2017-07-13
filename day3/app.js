@@ -52,10 +52,10 @@ app.get("/api/posts", (req, res, next) => {
 });
 
 // read one post
-app.get("/api/posts/:id", (req, res, next) => {
-    const id = req.params.id;
+app.get("/api/posts/:requested_id", (req, res, next) => {
+    const requested_id = req.params.requested_id;
     // callback example
-    Post.findById(id, (err, found) => {
+    Post.findById(requested_id, (err, found) => {
         if (found)
             return res.send(found);
         else
