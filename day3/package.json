@@ -1,5 +1,6 @@
 {
   "name": "YABE",
+  "private": true,
   "version": "0.0.1",
   "description": "Yet Another Blog Engine",
   "main": "index.js",

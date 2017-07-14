@@ -25,7 +25,7 @@ passport.use(new BasicStrategy({
     }
 /* Mongoose example: */
 // User.findOne({name: username}).catch(done).then(user => {
-//     if (user)
+//     if (!user)
 //         return done(/* no error*/null, /* authentication failed */false);
 //     bcrypt.compare(password, user.hash).then(success => {
 //         if (success)

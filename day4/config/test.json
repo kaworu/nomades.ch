@@ -1,0 +1,8 @@
+{
+    "server": {
+        "port": 3001
+    },
+    "mongodb": {
+        "database": "mongodb://localhost/yabe-test"
+    }
+}

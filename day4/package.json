@@ -5,20 +5,25 @@
   "description": "Yet Another Blog Engine",
   "main": "index.js",
   "scripts": {
-    "serve": "nodemon --verbose",
-    "test": "mocha"
+    "serve": "NODE_ENV=development nodemon --verbose",
+    "test": "NODE_ENV=test mocha"
   },
   "keywords": [],
   "author": "",
   "license": "Unlicense",
   "dependencies": {
+    "bcrypt": "^1.0.2",
     "body-parser": "^1.17.2",
-    "chai": "^4.0.2",
     "express": "^4.15.3",
-    "mocha": "^3.4.2",
-    "supertest": "^3.0.0"
+    "mongoose": "^4.11.1",
+    "morgan": "^1.8.2",
+    "passport": "^0.3.2",
+    "passport-http": "^0.3.0"
   },
   "devDependencies": {
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "chai": "^4.0.2",
+    "mocha": "^3.4.2",
+    "supertest": "^3.0.0"
   }
 }
